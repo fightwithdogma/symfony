@@ -250,7 +250,7 @@ class Filesystem
             throw new IOException(sprintf('Cannot rename because the target "%s" already exist.', $target));
         }
 
-        if (true !== @rename($origin, $target)) {
+        if (true !== (@rename($origin, $target) || (@copy($origin, $target) && unlink($origin)))) {
             throw new IOException(sprintf('Cannot rename "%s" to "%s".', $origin, $target));
         }
     }
